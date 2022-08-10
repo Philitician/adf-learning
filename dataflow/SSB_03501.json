@@ -1,0 +1,53 @@
+{
+	"name": "SSB_03501",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "InputBlob",
+						"type": "LinkedServiceReference"
+					},
+					"name": "SsbBlobSource"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "OutputSql",
+						"type": "LinkedServiceReference"
+					},
+					"name": "SQLOutput"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delimited',",
+				"     container: 'ssbinput',",
+				"     folderPath: '03501',",
+				"     fileName: '03501.csv',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: false) ~> SsbBlobSource",
+				"SsbBlobSource sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table',",
+				"     store: 'sqlserver',",
+				"     schemaName: 'dbo',",
+				"     tableName: 'ssb_03501',",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     deletable: false,",
+				"     upsertable: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SQLOutput"
+			]
+		}
+	}
+}
