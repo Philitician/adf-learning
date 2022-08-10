@@ -33,7 +33,7 @@
 				"     columnDelimiter: ',',",
 				"     escapeChar: '\\\\',",
 				"     quoteChar: '\\\"',",
-				"     columnNamesAsHeader: false) ~> SsbBlobSource",
+				"     columnNamesAsHeader: true) ~> SsbBlobSource",
 				"SsbBlobSource sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table',",
