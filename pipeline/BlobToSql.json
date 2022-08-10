@@ -1,6 +1,73 @@
 {
 	"name": "BlobToSql",
 	"properties": {
+		"activities": [
+			{
+				"name": "CopyFromSsb",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "POST",
+							"requestBody": "{\n  \"query\": [\n    {\n      \"code\": \"Region\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"0\",\n          \"30\",\n          \"01\",\n          \"99\",\n          \"9999\"\n        ]\n      }\n    },\n    {\n      \"code\": \"Aarsak\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"0\",\n          \"1\",\n          \"2\",\n          \"5\",\n          \"6\"\n        ]\n      }\n    },\n    {\n      \"code\": \"Dyr3\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"1\",\n          \"2\",\n          \"3\",\n          \"4\"\n        ]\n      }\n    },\n    {\n      \"code\": \"ContentsCode\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"AvgangHjort\"\n        ]\n      }\n    },\n    {\n      \"code\": \"Tid\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"1987-1988\",\n          \"1988-1989\",\n          \"1989-1990\",\n          \"2020-2021\",\n          \"2021-2022\"\n        ]\n      }\n    }\n  ],\n  \"response\": {\n    \"format\": \"csv\"\n  }\n}",
+							"requestTimeout": ""
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SSBSource",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableId": "03501"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SSBSink",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "03501"
+						}
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }
