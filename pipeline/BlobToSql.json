@@ -97,6 +97,20 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "SSB13434",
+				"description": "13434: KOSTRA-nøkkeltall for plan- og byggesaksbehandling (K) 2015 - 2021",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "13434",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
