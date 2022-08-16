@@ -1,0 +1,41 @@
+{
+	"name": "SSB13434Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "år",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "statistikkvariabel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "verdi",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 10
+			},
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "staging",
+			"table": "SSB13434"
+		}
+	}
+}

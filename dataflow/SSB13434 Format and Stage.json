@@ -1,0 +1,72 @@
+{
+	"name": "SSB13434 Format and Stage",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SSB13434Blob",
+						"type": "DatasetReference"
+					},
+					"name": "Blob"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SSB13434Staging",
+						"type": "DatasetReference"
+					},
+					"name": "StagingDB"
+				}
+			],
+			"transformations": [
+				{
+					"name": "MapDrifted"
+				},
+				{
+					"name": "toDecimal"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          region as string,",
+				"          {år} as string,",
+				"          statistikkvariabel as string,",
+				"          {13434: KOSTRA-nøkkeltall for plan- og byggesaksbehandling} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Blob",
+				"Blob derive(verdi = toString(byName('13434: KOSTRA-nøkkeltall for plan- og byggesaksbehandling')),",
+				"          {_c4} = toString(byName('_c4'))) ~> MapDrifted",
+				"MapDrifted derive(verdi = toDecimal(verdi, 28, 10)) ~> toDecimal",
+				"toDecimal sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          region as string,",
+				"          {år} as integer,",
+				"          statistikkvariabel as string,",
+				"          verdi as decimal(28,10),",
+				"          ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          region,",
+				"          {år},",
+				"          statistikkvariabel,",
+				"          verdi",
+				"     )) ~> StagingDB"
+			]
+		}
+	}
+}

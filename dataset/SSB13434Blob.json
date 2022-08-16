@@ -1,0 +1,41 @@
+{
+	"name": "SSB13434Blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "InputBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "13434.csv",
+				"folderPath": "13434",
+				"container": "ssbinput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "region",
+				"type": "String"
+			},
+			{
+				"name": "år",
+				"type": "String"
+			},
+			{
+				"name": "statistikkvariabel",
+				"type": "String"
+			},
+			{
+				"name": "13434: KOSTRA-nøkkeltall for plan- og byggesaksbehandling",
+				"type": "String"
+			}
+		]
+	}
+}
